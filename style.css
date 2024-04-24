@@ -1,0 +1,66 @@
+img {
+	max-width: 100%;
+}
+body {
+	background: rgb(244 80 110);
+	display: flex;
+	align-items: center;
+	gap: 3rem;
+	justify-content: space-evenly;
+	flex-wrap: wrap;
+	min-height: 100vh;
+}
+.card-perspective {
+	perspective: 1500px;
+	padding: 1rem;
+}
+.card {
+	display: flex;
+	gap: 1.2rem;
+	font-size: 2.2rem;
+	width: 450px;
+	aspect-ratio: 1;
+}
+.tilt {
+	--transition-speed: 200ms;
+
+	position: relative;
+	transform-style: preserve-3d;
+
+	animation: forwards var(--transition-speed);
+	animation-name: exit;
+
+	& * {
+		pointer-events: none;
+	}
+
+	&::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		background: rgba(15, 15, 15, 0.25);
+		filter: blur(20px);
+		pointer-events: none;
+	}
+}
+.card-perspective:hover .tilt {
+	animation-name: enter;
+}
+@keyframes enter {
+	from {
+		transform: rotateX(0) rotateY(0);
+	}
+	to {
+		transform: rotateX(var(--x-tilt, 0)) rotateY(var(--y-tilt, 0));
+	}
+}
+
+@keyframes exit {
+	to {
+		transform: rotateX(0) rotateY(0);
+	}
+	from {
+		transform: rotateX(var(--x-tilt, 0)) rotateY(var(--y-tilt, 0));
+	}
+}
